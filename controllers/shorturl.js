@@ -20,7 +20,7 @@ exports.createUrl = async (req, res, next) => {
       shortUrl: `${baseUrl}/${newEntry.shortUrl}`,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return res.status(500).json({ error: "Internal server error" });
   }
 };
@@ -34,7 +34,8 @@ exports.getAllUrl = async (req, res, next) => {
       res.status(200).send(shortUrls);
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 exports.getUrl = async (req, res, next) => {
@@ -49,6 +50,7 @@ exports.getUrl = async (req, res, next) => {
       res.redirect(`${shorturl.fullUrl}`);
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
