@@ -7,8 +7,8 @@ const shortUrlSchema = new mongoose.Schema(
       required: true,
     },
     shortUrl: {
+      unique: true,
       type: String,
-      required: true,
       default: () => nanoid().substring(0, 10),
     },
     clicks: {
@@ -18,4 +18,23 @@ const shortUrlSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+shortUrlSchema.pre("validate", async function (next) {
+  console.log(this.isNew);
+  if (!this.isNew) {
+    return next();
+  }
+  let exist = true;
+  while (exist) {
+    const existing = await mongoose.models.shortUrl.findOne({
+      shortUrl: this.shortUrl,
+    });
+    if (!existing) {
+      exist = false;
+    } else {
+      this.shortUrl = nanoid(10);
+    }
+  }
+  next();
+});
 module.exports = mongoose.model("shortUrl", shortUrlSchema);

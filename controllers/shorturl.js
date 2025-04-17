@@ -1,3 +1,4 @@
+const shorturl = require("../models/shorturl");
 const urlModel = require("../models/shorturl");
 
 exports.createUrl = async (req, res, next) => {
@@ -7,10 +8,9 @@ exports.createUrl = async (req, res, next) => {
     const existing = await urlModel.findOne({ fullUrl });
 
     if (existing) {
-      return res.status(200).json({
-        message: "Short URL already exists",
-        shortUrl: `${baseUrl}/${existing.shortUrl}`,
-      });
+      return res
+        .status(200)
+        .json({ shorturl: `${baseUrl}/${existing.shortUrl}` });
     }
 
     const newEntry = await urlModel.create({ fullUrl });
