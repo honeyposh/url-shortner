@@ -3,7 +3,7 @@ const urlModel = require("../models/shorturl");
 exports.createUrl = async (req, res, next) => {
   try {
     const { fullUrl } = req.body;
-    const baseUrl = `http://localhost:${process.env.PORT}/api/shortUrl`;
+    const baseUrl = `${process.env.BASE_URL}/api/shortUrl`
     const existing = await urlModel.findOne({ fullUrl });
 
     if (existing) {
@@ -26,7 +26,7 @@ exports.createUrl = async (req, res, next) => {
 
 exports.getAllUrl = async (req, res, next) => {
   try {
-    const baseUrl = `http://localhost:${process.env.PORT}/api/shortUrl`;
+    const baseUrl = `${process.env.BASE_URL}/api/shortUrl`
     const getUrls = await urlModel.find();
     if (getUrls < 0) {
       res.status(404).send(" Short url not found");
@@ -35,7 +35,7 @@ exports.getAllUrl = async (req, res, next) => {
       originalUrl: url.fullUrl,
       shortUrl: `${baseUrl}/${url.shortUrl}`,
     }));
-    console.log(shortUrls)
+    // console.log(shortUrls)
     res.status(200).json({
       success: true,
       urls: shortUrls,
