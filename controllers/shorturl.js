@@ -26,12 +26,20 @@ exports.createUrl = async (req, res, next) => {
 
 exports.getAllUrl = async (req, res, next) => {
   try {
-    const shortUrls = await urlModel.find();
-    if (shortUrls < 0) {
+    const baseUrl = `http://localhost:${process.env.PORT}/api/shortUrl`;
+    const getUrls = await urlModel.find();
+    if (getUrls < 0) {
       res.status(404).send(" Short url not found");
-    } else {
-      res.status(200).send(shortUrls);
-    }
+    } 
+    const shortUrls = getUrls.map((url) => ({
+      originalUrl: url.fullUrl,
+      shortUrl: `${baseUrl}/${url.shortUrl}`,
+    }));
+    console.log(shortUrls)
+    res.status(200).json({
+      success: true,
+      urls: shortUrls,
+    })
   } catch (error) {
     // console.log(error);
     return res.status(500).json({ error: "Internal server error" });
