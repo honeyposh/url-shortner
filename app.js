@@ -9,7 +9,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", shortUrl);
 const port = process.env.PORT || 5000;
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(
+    `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@cluster0.elsi0yn.mongodb.net/${process.env.DATABASE}?retryWrites=true&w=majority&appName=Cluster0`
+  )
   .then(() => {
     app.listen(port, () => {
       console.log("connected");

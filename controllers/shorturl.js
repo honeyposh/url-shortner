@@ -1,4 +1,3 @@
-const shorturl = require("../models/shorturl");
 const urlModel = require("../models/shorturl");
 
 exports.createUrl = async (req, res, next) => {
@@ -41,7 +40,7 @@ exports.getAllUrl = async (req, res, next) => {
 exports.getUrl = async (req, res, next) => {
   try {
     const shorturl = await urlModel.findOne({ shortUrl: req.params.id });
-    console.log(shorturl.fullUrl);
+    // console.log(shorturl.fullUrl);
     if (!shorturl) {
       res.status(404).json("No url");
     } else {

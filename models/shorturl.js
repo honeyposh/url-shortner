@@ -20,7 +20,7 @@ const shortUrlSchema = new mongoose.Schema(
 );
 
 shortUrlSchema.pre("validate", async function (next) {
-  console.log(this.isNew);
+  // console.log(this.isNew);
   if (!this.isNew) {
     return next();
   }
